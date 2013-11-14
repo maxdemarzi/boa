@@ -12,9 +12,10 @@ Relationships:
 Sector<-[:IN_SECTOR]-Industry<-[:IN_INDUSTRY]-Classification<-[:CLASSIFIED_AS]-Company
 Family<-[:IN_FAMILY]-Company
 
-CREATE INDEX ON :Sector(name);
-CREATE INDEX ON :Industry(name);
-CREATE INDEX ON :Naics(code);
+
+CREATE CONSTRAINT ON (sector:Sector) ASSERT sector.name IS UNIQUE
+CREATE CONSTRAINT ON (industry:Industry) ASSERT industry.name IS UNIQUE
+CREATE CONSTRAINT ON (naics:Naics) ASSERT naics.code IS UNIQUE
 CREATE INDEX ON :Naics(description);
 
 MATCH node
