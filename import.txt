@@ -35,7 +35,7 @@ WHERE (node)-[:IN_INDUSTRY]->()
 SET node:Naics;
 
 MATCH node
-WHERE (node)-[:IN_NAICS]->()
+WHERE (node)-[:IN_FAMILY]->()
 SET node:Company;
 
 MATCH node
@@ -66,10 +66,10 @@ FAM_GCI_node.txt (392512)
 family_gci:string:Family	name:string:Family	city:string state:string public:string country:string hier_code:string zip:string stock:string stock_exg_code:string	ecr_family_tre:double	ecr_family_rating:int
 
 PRMY_GCI_NAICS_CD_rels.txt (557182)
-primary_gci:string:Company	code:string:Naics
+primary_gci:string:Company	code:string:Naics	type
 
 PRMY_GCI_FAM_GCI_rels.txt (557182)
-primary_gci:string:Company	family_gci:string:Family
+primary_gci:string:Company	family_gci:string:Family	type
 
 
 
