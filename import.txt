@@ -23,7 +23,7 @@ WHERE (node)<-[:IN_SECTOR]-()
 SET node:Sector;
 
 MATCH node
-WHERE (node)<-[:IN_INDUSTRY]-()
+WHERE (node)-[:IN_SECTOR]->()
 SET node:Industry;
 
 MATCH node
@@ -47,8 +47,15 @@ code:string:Naics	name:string:Industry	type
 INDUSTRY_CD_SECTOR_rels.txt (73) IN_SECTOR
 name:string:Industry	name:string:Sector	type
 
+PRMY_GCI_node.txt (557182)
+primary_gci:string:Company	name:string:Company	city:string state:string public:string country:string hier_code:string zip:string stock:string stock_exg_code:string	ecr_family_tre:double	ecr_family_rating:int
+
+FAM_GCI_node.txt
+family_gci:string:Family	name:string:Family	city:string state:string public:string country:string hier_code:string zip:string stock:string stock_exg_code:string	ecr_family_tre:double	ecr_family_rating:int
+
+
 batch.properties file:
-batch_import.nodes_files=NAICS_CD_node.txt,INDUSTRY_CD_node.txt,SECTOR_node.txt
+batch_import.nodes_files=NAICS_CD_node.txt,INDUSTRY_CD_node.txt,SECTOR_node.txt,PRMY_GCI_node.txt,FAM_GCI_node.txt 
 batch_import.rels_files=NAICS_CD__INDUSTRY_CD_rels.txt,INDUSTRY_CD_SECTOR_rels.txt
 
 batch_import.csv.quotes=false
