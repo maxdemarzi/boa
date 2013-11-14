@@ -27,7 +27,7 @@ WHERE (node)<-[:IN_INDUSTRY]-()
 SET node:Industry;
 
 MATCH node
-WHERE ()-[:IN_INDUSTRY]->(node)
+WHERE (node)-[:IN_INDUSTRY]->()
 SET node:Naics;
 
 
