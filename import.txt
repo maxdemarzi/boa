@@ -12,6 +12,24 @@ Relationships:
 Sector<-[:IN_SECTOR]-Industry<-[:IN_INDUSTRY]-Classification<-[:CLASSIFIED_AS]-Company
 Family<-[:IN_FAMILY]-Company
 
+CREATE INDEX ON :Sector(name);
+CREATE INDEX ON :Industry(name);
+CREATE INDEX ON :Naics(code);
+CREATE INDEX ON :Naics(description);
+
+MATCH node
+WHERE (node)<-[:IN_SECTOR]-()
+SET node:Sector;
+
+MATCH node
+WHERE (node)<-[:IN_INDUSTRY]-()
+SET node:Industry;
+
+MATCH node
+WHERE ()-[:IN_INDUSTRY]->(node)
+SET node:Naics;
+
+
 Replace the Headers:
 NAICS_CD_node.txt (1380)
 code:string:Naics	description:string:Naics
@@ -49,3 +67,8 @@ neostore.propertystore.db.mapped_memory=500M
 neostore.propertystore.db.strings.mapped_memory=500M
 neostore.propertystore.db.index.keys.mapped_memory=5M
 neostore.propertystore.db.index.mapped_memory=5M
+
+
+To run it
+java -server -Xmx4G -jar ./batch-import-jar-with-dependencies.jar graph.db
+
