@@ -71,17 +71,20 @@ primary_gci:string:Company	code:string:Naics	type
 PRMY_GCI_FAM_GCI_rels.txt (557182)
 primary_gci:string:Company	family_gci:string:Family	type
 
-
+OGCI_BGCI_rels.txt ()
+primary_gci:string:Company primary_gci:string:Company type tran_id:string date:string channel:string category:string  amount:double
 
 batch.properties file:
-batch_import.nodes_files=NAICS_CD_node.txt,INDUSTRY_CD_node.txt,SECTOR_node.txt,PRMY_GCI_node.txt,FAM_GCI_node.txt 
-batch_import.rels_files=NAICS_CD__INDUSTRY_CD_rels.txt,INDUSTRY_CD_SECTOR_rels.txt,PRMY_GCI_NAICS_CD_rels.txt,PRMY_GCI_FAM_GCI_rels.txt
+batch_import.nodes_files=NAICS_CD_node.txt,INDUSTRY_CD_node.txt,SECTOR_node.txt,PRMY_GCI_node.txt,FAM_GCI_node.txt
+batch_import.rels_files=NAICS_CD__INDUSTRY_CD_rels.txt,INDUSTRY_CD_SECTOR_rels.txt,PRMY_GCI_NAICS_CD_rels.txt,PRMY_GCI_FAM_GCI_rels.txt,OGCI_BGCI_rels.txt
 
 batch_import.csv.quotes=false
 batch_import.mapdb_cache.disable=true
 batch_import.node_index.Sector=exact
 batch_import.node_index.Industry=exact
 batch_import.node_index.Naics=exact
+batch_import.node_index.Company=exact
+batch_import.node_index.Family=exact
 cache_type=none
 use_memory_mapped_buffers=true
 # 9 bytes per node 
