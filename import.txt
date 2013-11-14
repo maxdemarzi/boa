@@ -1,0 +1,51 @@
+Data Model
+==========
+
+Nodes:
+Company
+Sector
+Industry
+Classification (NAICS)
+Family
+
+Relationships:
+Sector<-[:IN_SECTOR]-Industry<-[:IN_INDUSTRY]-Classification<-[:CLASSIFIED_AS]-Company
+Family<-[:IN_FAMILY]-Company
+
+Replace the Headers:
+NAICS_CD_node.txt (1380)
+code:string:Naics	description:string:Naics
+
+INDUSTRY_CD_node.txt (73)
+name:string:Industry
+
+SECTOR_node.txt (13)
+name:string:Sector
+
+NAICS_CD__INDUSTRY_CD_rels.txt (1380) IN_INDUSTRY
+code:string:Naics	name:string:Industry	type
+
+INDUSTRY_CD_SECTOR_rels.txt (73) IN_SECTOR
+name:string:Industry	name:string:Sector	type
+
+batch.properties file:
+batch_import.nodes_files=NAICS_CD_node.txt,INDUSTRY_CD_node.txt,SECTOR_node.txt
+batch_import.rels_files=NAICS_CD__INDUSTRY_CD_rels.txt,INDUSTRY_CD_SECTOR_rels.txt
+
+batch_import.csv.quotes=false
+batch_import.mapdb_cache.disable=true
+batch_import.node_index.Sector=exact
+batch_import.node_index.Industry=exact
+batch_import.node_index.Naics=exact
+cache_type=none
+use_memory_mapped_buffers=true
+# 9 bytes per node 
+neostore.nodestore.db.mapped_memory=200M
+# 33 bytes per relationships
+neostore.relationshipstore.db.mapped_memory=3G
+# 38 bytes per property
+neostore.propertystore.db.mapped_memory=500M
+# 60 bytes per long-string block
+neostore.propertystore.db.strings.mapped_memory=500M
+neostore.propertystore.db.index.keys.mapped_memory=5M
+neostore.propertystore.db.index.mapped_memory=5M
