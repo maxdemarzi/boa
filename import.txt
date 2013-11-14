@@ -9,7 +9,7 @@ Classification (NAICS)
 Family
 
 Relationships:
-Sector<-[:IN_SECTOR]-Industry<-[:IN_INDUSTRY]-Classification<-[:CLASSIFIED_AS]-Company
+Sector<-[:IN_SECTOR]-Industry<-[:IN_INDUSTRY]-Classification<-[:IN_NAICS]-Company
 Family<-[:IN_FAMILY]-Company
 
 
@@ -17,6 +17,10 @@ CREATE CONSTRAINT ON (sector:Sector) ASSERT sector.name IS UNIQUE
 CREATE CONSTRAINT ON (industry:Industry) ASSERT industry.name IS UNIQUE
 CREATE CONSTRAINT ON (naics:Naics) ASSERT naics.code IS UNIQUE
 CREATE INDEX ON :Naics(description);
+CREATE CONSTRAINT ON (company:Company) ASSERT company.primary_gci IS UNIQUE
+CREATE INDEX ON :Company(name);
+CREATE CONSTRAINT ON (family:Family) ASSERT family.family_gci IS UNIQUE
+CREATE INDEX ON :Family(name);
 
 MATCH node
 WHERE (node)<-[:IN_SECTOR]-()
@@ -29,6 +33,14 @@ SET node:Industry;
 MATCH node
 WHERE (node)-[:IN_INDUSTRY]->()
 SET node:Naics;
+
+MATCH node
+WHERE (node)-[:IN_NAICS]->()
+SET node:Company;
+
+MATCH node
+WHERE (node)<-[:IN_FAMILY]-()
+SET node:Family;
 
 
 Replace the Headers:
@@ -50,13 +62,20 @@ name:string:Industry	name:string:Sector	type
 PRMY_GCI_node.txt (557182)
 primary_gci:string:Company	name:string:Company	city:string state:string public:string country:string hier_code:string zip:string stock:string stock_exg_code:string	ecr_family_tre:double	ecr_family_rating:int
 
-FAM_GCI_node.txt
+FAM_GCI_node.txt (392512)
 family_gci:string:Family	name:string:Family	city:string state:string public:string country:string hier_code:string zip:string stock:string stock_exg_code:string	ecr_family_tre:double	ecr_family_rating:int
+
+PRMY_GCI_NAICS_CD_rels.txt (557182)
+primary_gci:string:Company	code:string:Naics
+
+PRMY_GCI_FAM_GCI_rels.txt (557182)
+primary_gci:string:Company	family_gci:string:Family
+
 
 
 batch.properties file:
 batch_import.nodes_files=NAICS_CD_node.txt,INDUSTRY_CD_node.txt,SECTOR_node.txt,PRMY_GCI_node.txt,FAM_GCI_node.txt 
-batch_import.rels_files=NAICS_CD__INDUSTRY_CD_rels.txt,INDUSTRY_CD_SECTOR_rels.txt
+batch_import.rels_files=NAICS_CD__INDUSTRY_CD_rels.txt,INDUSTRY_CD_SECTOR_rels.txt,PRMY_GCI_NAICS_CD_rels.txt,PRMY_GCI_FAM_GCI_rels.txt
 
 batch_import.csv.quotes=false
 batch_import.mapdb_cache.disable=true
@@ -70,13 +89,13 @@ neostore.nodestore.db.mapped_memory=200M
 # 33 bytes per relationships
 neostore.relationshipstore.db.mapped_memory=3G
 # 38 bytes per property
-neostore.propertystore.db.mapped_memory=500M
+neostore.propertystore.db.mapped_memory=5G
 # 60 bytes per long-string block
-neostore.propertystore.db.strings.mapped_memory=500M
+neostore.propertystore.db.strings.mapped_memory=5G
 neostore.propertystore.db.index.keys.mapped_memory=5M
 neostore.propertystore.db.index.mapped_memory=5M
 
 
 To run it
-java -server -Xmx4G -jar ./batch-import-jar-with-dependencies.jar graph.db
+java -server -Xmx14G -jar ./batch-import-jar-with-dependencies.jar graph.db
 
