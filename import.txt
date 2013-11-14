@@ -38,9 +38,9 @@ LIMIT 10000
 SET node:Company;
 
 START node = node:Company("primary_gci:*") 
-where not n:Label
+where not n:Company
 with n limit 50000
-set n:Label
+set n:Company
 return count(*)
 
 START node = node:Family("family_gci:*") 
