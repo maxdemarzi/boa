@@ -21,6 +21,31 @@ CREATE CONSTRAINT ON (company:Company) ASSERT company.primary_gci IS UNIQUE
 CREATE INDEX ON :Company(name);
 CREATE CONSTRAINT ON (family:Family) ASSERT family.family_gci IS UNIQUE
 CREATE INDEX ON :Family(name);
+-----------------------------------
+START node = node:Sector("name:*") 
+SET node:Sector;
+
+START node = node:Industry("name:*") 
+SET node:Industry;
+
+START node = node:Naics("code:*") 
+SET node:Naics;
+
+START node = node:Company("primary_gci:*") 
+ORDER BY ID(node)
+SKIP 0
+LIMIT 10000
+SET node:Company;
+
+START node = node:Company("primary_gci:*") 
+where not n:Label
+with n limit 50000
+set n:Label
+return count(*)
+
+START node = node:Family("family_gci:*") 
+SET node:Family;
+
 
 MATCH node
 WHERE (node)<-[:IN_SECTOR]-()
