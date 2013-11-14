@@ -72,7 +72,7 @@ PRMY_GCI_FAM_GCI_rels.txt (557182)
 primary_gci:string:Company	family_gci:string:Family	type
 
 OGCI_BGCI_rels.txt ()
-primary_gci:string:Company primary_gci:string:Company type tran_id:string date:string channel:string category:string  amount:double
+primary_gci:string:Company primary_gci:string:Company type tran_id:double date:string channel:string category:string  amount:double
 
 batch.properties file:
 batch_import.nodes_files=NAICS_CD_node.txt,INDUSTRY_CD_node.txt,SECTOR_node.txt,PRMY_GCI_node.txt,FAM_GCI_node.txt
