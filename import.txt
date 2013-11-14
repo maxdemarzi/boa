@@ -102,3 +102,32 @@ neostore.propertystore.db.index.mapped_memory=5M
 To run it
 java -server -Xmx14G -jar ./batch-import-jar-with-dependencies.jar graph.db
 
+
+neo4j/data/graph.db
+
+
+ls -alh neostore*
+14M Nodes
+1.7G Properties
+9.7M Strings
+441M Relationships
+1M Arrays
+
+neo4j/conf/neo4j.properties
+
+neostore.nodestore.db.mapped_memory=20M
+neostore.relationshipstore.db.mapped_memory=500M
+neostore.propertystore.db.mapped_memory=2G
+neostore.propertystore.db.strings.mapped_memory=10M
+neostore.propertystore.db.arrays.mapped_memory=10M
+
+cache_type=gcr
+node_cache_array_fraction=10
+relationship_cache_array_fraction=10
+node_cache_size=2G
+relationship_cache_size=2G
+
+neostore.propertystore.db.index.keys.mapped_memory=5M
+neostore.propertystore.db.index.mapped_memory=5M
+
+
